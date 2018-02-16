@@ -1,0 +1,25 @@
+{
+  "name": "virtual-exchange-market",
+  "version": "1.0.0",
+  "description": "Virtual Crypto Exchange Market for testing your trader bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alireza29675/Virtual-Exchange-Market.git"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "exchange",
+    "market",
+    "virtual"
+  ],
+  "author": "Alireza Sheikholmolouki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alireza29675/Virtual-Exchange-Market/issues"
+  },
+  "homepage": "https://github.com/Alireza29675/Virtual-Exchange-Market#readme"
+}
