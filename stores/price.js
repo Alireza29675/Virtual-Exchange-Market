@@ -44,7 +44,7 @@ class PriceStore {
      */
     fetch () {
 
-        cc.priceMulti(coins.all, coins.base).then(data => {
+        cc.priceMulti(coins.all, coins.all).then(data => {
 
             // updating data
             this.prices = data;
