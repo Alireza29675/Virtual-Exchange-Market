@@ -1,5 +1,3 @@
-import { setTimeout } from 'timers';
-
 global.fetch = require('node-fetch')
 const cc = require('cryptocompare')
 const coins = require('./coins')
