@@ -1,19 +1,21 @@
 const priceStore = require('../stores/price')
 const wallet = require('../stores/wallet')
 
-class AppController {
+class ExchangeController {
 
     /**
-     * Represents an AppController
+     * Represents an ExchangeController
      * @constructor
      */
     constructor() {
+        
+    }
 
-        // inital test deposit (1 BTC)
-        wallet.deposit('BTC', 1)
-
+    order (amount, from, to) {
+        
     }
     
+
 }
 
-module.exports = AppController;
+module.exports = ExchangeController;
