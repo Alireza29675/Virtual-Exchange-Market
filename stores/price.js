@@ -9,22 +9,15 @@ class PriceStore {
      * @constructor
      */
     constructor () {
-        this.restTime = 1000; // rest time between fetches
+        this.restTime = 10 * 1000; // rest time between fetches
         this.listeners = []; // listeners to call when prices fetch successfully
 
         this.prices = {};
         this.updateTime = null;
+        this.ready = false;
 
         // start fetching
         this.fetch()
-    }
-
-    /**
-     * Get ready state of prices
-     * @return {Boolean} ready state
-     */
-    get ready () {
-        return Boolean(this.updateTime)
     }
 
     /**
@@ -51,11 +44,12 @@ class PriceStore {
      */
     fetch () {
 
-        cc.priceMulti(coins.otherCoins, coins.baseCoins).then(data => {
+        cc.priceMulti(coins.other, coins.base).then(data => {
 
             // updating data
             this.prices = data;
             this.updateTime = Date.now();
+            this.ready = true;
             
             // calling listeners
             for (let listener of this.listeners) listener(this.prices, this.updateTime)
@@ -68,6 +62,9 @@ class PriceStore {
 
             // stderr the err
             console.error(err);
+
+            // updating ready state
+            this.ready = false;
 
             // recalling fetch function
             setTimeout(this.fetch.bind(this), this.restTime);
