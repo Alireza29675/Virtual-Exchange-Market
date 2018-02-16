@@ -1,4 +1,5 @@
 const coins = require('./coins')
+const Handy = require('handy-storage')
 
 class WalletStore {
 
@@ -7,10 +8,10 @@ class WalletStore {
      * @constructor
      */
     constructor (initalFunds = {}) {
-
         // all wallet funds
         this.funds = initalFunds;
-
+        // handy-storage data handler
+        this.db = null;
     }
 
     /**
@@ -35,6 +36,7 @@ class WalletStore {
                 amount: amount,
                 reservedAmount: 0
             }
+            if (this.db) this.db.save(); // save db if there was one
             return {
                 success: true,
                 message: `${amount} ${coin.toUpperCase()} charged successfuly!`
@@ -43,6 +45,14 @@ class WalletStore {
 
         // If fund exists and it just want to charge
         this.funds[coin].amount += amount
+
+        // save db if there was one
+        if (this.db) this.db.save();
+
+        return {
+            success: true,
+            message: `${amount} ${coin.toUpperCase()} charged successfuly!`
+        }
 
     }
 
@@ -81,6 +91,14 @@ class WalletStore {
         // If enough fund exists and it just want to discharge
         this.funds[coin].amount -= amount
 
+        // save db if there was one
+        if (this.db) this.db.save();
+
+        return {
+            success: true,
+            message: `${amount} ${coin.toUpperCase()} discharged successfuly!`
+        }
+
     }
 
     /**
@@ -101,6 +119,18 @@ class WalletStore {
      */
     withdraw (coin, amount) {
         return this.discharge(coin, amount)
+    }
+
+
+    /**
+     * Connects Wallet to a JSON File
+     * @param {String} file - JSON file path
+     * @return {Object} state object { success: Boolean, message: String }
+     */
+    connect (file) {
+        this.db = new Handy(file);
+        if (this.db.data) this.funds = Object.assign({}, this.db.data);
+        this.db.data = this.funds;
     }
 
 }
