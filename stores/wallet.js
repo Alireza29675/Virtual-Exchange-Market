@@ -1,3 +1,5 @@
+const md5 = require('md5')
+
 const coins = require('./coins')
 const Handy = require('handy-storage')
 
@@ -121,6 +123,14 @@ class WalletStore {
         return this.discharge(coin, amount)
     }
 
+    /**
+     * Generate fake deposit address
+     * @param {String} coin - Coin Type (SYMBOL)
+     * @return {String} Coin's deposit address
+     */
+    getDepositAddress (coin) {
+        return md5(coin)
+    }
 
     /**
      * Connects Wallet to a JSON File
