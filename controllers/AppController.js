@@ -72,6 +72,27 @@ class AppController {
     }
 
     /**
+     * Returns active orders
+     * @param {String} pair
+     * @return {Array} active orders
+     */
+    getActiveOrders (pair) {
+        // orders object
+        const orders = this.exchange.orders;
+        const activeOrders = [];
+
+        // finding active orders
+        for (let uuid in orders) {
+            const order = orders[uuid];
+            if (order) if (!order.completed) activeOrders.push(order);
+        }
+
+        // returning active orders
+        return activeOrders;
+
+    }
+
+    /**
      * Returns coin's balance from wallet
      * @param {String} coin - Coin Type (SYMBOL)
      * @return {Object} Coin's balance { amount: Number, reservedAmount: Number }
