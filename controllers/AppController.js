@@ -20,12 +20,12 @@ class AppController {
     }
 
     /**
-     * Puts an sell/buy order to exchange market
+     * Creates a sell/buy order to exchange market
      * @param {String} type - order type ("buy" | "sell")
      * @param {Object} options - order options { from: String, to: String, amount: Number, price: Number }
      * @return {Order|Object} state object { success: Boolean, message: String } 
      */
-    order (type, options) {
+    createOrder (type, options) {
 
         // validating amount
         if (!options.amount || typeof options.amount !== 'number') return {
@@ -60,6 +60,24 @@ class AppController {
         if (type.toLowerCase() === 'buy') {
             return this.exchange.buyOrder(options.amount, options.from, options.to, options.price)
         }
+    }
+
+    /**
+     * Cancels an order by UUID
+     * @param {Number} uuid - Order's UUID
+     * @return {Object} state object { success: Boolean, message: String }
+     */
+    cancelOrder (uuid) {
+        return this.exchange.cancelOrder(uuid)
+    }
+
+    /**
+     * Returns coin's balance from wallet
+     * @param {String} coin - Coin Type (SYMBOL)
+     * @return {Object} Coin's balance { amount: Number, reservedAmount: Number }
+     */
+    getBalance (coin) {
+        return this.wallet.funds[coin]
     }
 
     /**

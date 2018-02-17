@@ -91,11 +91,16 @@ class ExchangeController {
 
     /**
      * Cancels an order by it's uuid
-     * @param {Number} uuid 
+     * @param {Number} uuid - Order's UUID
+     * @return {Object} state object { success: Boolean, message: String }
      */
     cancelOrder (uuid) {
         this.orders[uuid] = null;
         delete this.orders[uuid];
+        return {
+            success: true,
+            message: `Order {${uuid}} canceled successfuly!`
+        }
     }
     
 
