@@ -11,21 +11,38 @@ class AppController {
      */
     constructor() {
 
-        // inital test deposit (1 BTC)
-        wallet.deposit('BTC', 1)
+        // Initilizing wallet to access from out
+        this.wallet = wallet;
 
-        // initializing controllers
-        this.exchangeController = new ExchangeController()
+        // Initializing controllers
+        this.exchange = new ExchangeController();
 
-        const order = this.exchangeController.order(1, 'BTC', 'ETH', 10.74)
+    }
+
+    /**
+     * Puts an sell/buy order to exchange market
+     * @param {String} type - order type ("buy" | "sell")
+     * @param {Object} options - order options { from: String, to: String, amount: Number, price: Number }
+     */
+    order (type, options) {
         
-        setInterval(() => {
-            console.log('----------------------------')
-            console.log(this.exchangeController.orders)
-            console.log(priceStore.prices['BTC']['ETH'])
-            console.log(wallet.funds)
-        }, 1000)
+        // If order type was sell
+        if (type.toLowerCase() === 'sell') {
+            return this.exchange.sellOrder(options.amount, options.from, options.to, options.price)
+        }
 
+        // If order type was buy
+        if (type.toLowerCase() === 'buy') {
+            return this.exchange.buyOrder(options.amount, options.from, options.to, options.price)
+        }
+    }
+
+    /**
+     * Connects a JSON File to wallet
+     * @param {String} file - JSON file path
+     */
+    connectWalletTo (file) {
+        this.wallet.connect(file)
     }
     
 }
