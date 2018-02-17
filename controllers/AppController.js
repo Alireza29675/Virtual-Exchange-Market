@@ -65,9 +65,10 @@ class AppController {
     /**
      * Connects a JSON File to wallet
      * @param {String} file - JSON file path
+     * @return {Object} state object { success: Boolean, message: String }
      */
     connectWalletTo (file) {
-        this.wallet.connect(file)
+        return this.wallet.connect(file)
     }
     
 }

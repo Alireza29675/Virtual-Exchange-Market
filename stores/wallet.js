@@ -131,6 +131,10 @@ class WalletStore {
         this.db = new Handy(file);
         if (this.db.data) this.funds = Object.assign({}, this.db.data);
         this.db.data = this.funds;
+        return {
+            success: true,
+            message: `Wallet is now connected to \`${file}\``
+        }
     }
 
 }
