@@ -1,3 +1,5 @@
+const uuidv4 = require('uuid/v4');
+
 const coins = require('../stores/coins')
 const priceStore = require('../stores/price')
 const wallet = require('../stores/wallet')
@@ -12,7 +14,7 @@ class ExchangeController {
      */
     constructor() {
         // all open orders
-        this.orders = [];
+        this.orders = {};
     }
 
     /**
@@ -56,8 +58,9 @@ class ExchangeController {
         }
 
         // If everything was fine
-        const order = new Order(this, amount, from, to, price)
-        this.orders.push(order)
+        const uuid = uuidv4();
+        const order = new Order(this, uuid, amount, from, to, price)
+        this.orders[uuid] = order;
         return order;
 
     }
@@ -87,13 +90,12 @@ class ExchangeController {
     }
 
     /**
-     * Cancels an order by it's index
-     * @param {Number} index 
+     * Cancels an order by it's uuid
+     * @param {Number} uuid 
      */
-    cancelOrder (index) {
-        delete this.orders[index];
-        this.orders[index] = null;
-        this.orders.splice(index, 1);
+    cancelOrder (uuid) {
+        this.orders[uuid] = null;
+        delete this.orders[uuid];
     }
     
 

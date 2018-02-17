@@ -10,11 +10,12 @@ class Order {
      * @param {String} to - To Coin
      * @param {Number} price - Order Price
      */
-    constructor (exchangeController, amount, from, to, price) {
+    constructor (exchangeController, uuid, amount, from, to, price) {
 
         this.exchangeController = exchangeController;
         
         // identity variables
+        this.uuid = uuid;
         this.amount = amount;
         this.from = from;
         this.to = to;
@@ -67,8 +68,7 @@ class Order {
         }
 
         // removing order from exchangeController orders
-        const index = this.exchangeController.orders.indexOf(this);
-        this.exchangeController.cancelOrder(index)
+        this.exchangeController.cancelOrder(this.uuid)
     }
 
 }
