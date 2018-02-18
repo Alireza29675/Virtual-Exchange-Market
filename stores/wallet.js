@@ -12,8 +12,9 @@ class WalletStore {
     constructor (initalFunds = {}) {
         // all wallet funds
         this.funds = initalFunds;
-        // handy-storage data handler
-        this.db = null;
+
+        // handy-storage's storage
+        this.storage = null;
     }
 
     /**
@@ -38,7 +39,7 @@ class WalletStore {
                 amount: amount,
                 reservedAmount: 0
             }
-            if (this.db) this.db.save(); // save db if there was one
+            if (this.storage) this.storage.save({ sync: true }); // save db if there was one
             return {
                 success: true,
                 message: `${amount} ${coin.toUpperCase()} charged successfuly!`
@@ -48,8 +49,8 @@ class WalletStore {
         // If fund exists and it just want to charge
         this.funds[coin].amount += amount
 
-        // save db if there was one
-        if (this.db) this.db.save();
+        // save storage if there was one
+        if (this.storage) this.storage.save({ sync: true });
 
         return {
             success: true,
@@ -94,7 +95,7 @@ class WalletStore {
         this.funds[coin].amount -= amount
 
         // save db if there was one
-        if (this.db) this.db.save();
+        if (this.storage) this.storage.save({ sync: true });
 
         return {
             success: true,
@@ -138,9 +139,9 @@ class WalletStore {
      * @return {Object} state object { success: Boolean, message: String }
      */
     connect (file) {
-        this.db = new Handy(file);
-        if (this.db.data) this.funds = Object.assign({}, this.db.data);
-        this.db.data = this.funds;
+        console.log('Connecting to json')
+        this.storage = new Handy(file);
+        this.funds = this.storage.state;
         return {
             success: true,
             message: `Wallet is now connected to \`${file}\``
