@@ -45,7 +45,7 @@ class ExchangeController {
         if (!wallet.funds[from]) {
             return {
                 success: false,
-                message: `Not enough ${from.toUpperCase()} to order! Remaining: ${wallet.funds[from].amount}`
+                message: `Not enough ${from.toUpperCase()} to order! Remaining: 0`
             }
         }
 

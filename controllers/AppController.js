@@ -89,7 +89,6 @@ class AppController {
 
         // returning active orders
         return activeOrders;
-
     }
 
     /**
@@ -99,6 +98,37 @@ class AppController {
      */
     getBalance (coin) {
         return this.wallet.funds[coin]
+    }
+
+    /**
+     * Returns Ticker Price
+     * @param {String} from - From Coin Type (SYMBOL)
+     * @param {String} to - To Coin Type (SYMBOL)
+     * @return {Object} object state { success: Boolean, message: String }
+     */
+    getTicker (from, to) {
+
+        // If pricesStore doesn't exist
+        if (!priceStore.prices[from]) return {
+            success: false,
+            message: `Market doesn't have ${from} price!`
+        }
+
+        // If pricesStore doesn't have that ticker price
+        if (!priceStore.prices[from][to]) return {
+            success: false,
+            message: `Market doesn't have ${from}-${to} price!`
+        }
+
+        return {
+            success: true,
+            message: ``,
+            from: from,
+            to: to,
+            price: priceStore.prices[from][to]
+        }
+
+
     }
 
     /**
