@@ -139,7 +139,6 @@ class WalletStore {
      * @return {Object} state object { success: Boolean, message: String }
      */
     connect (file) {
-        console.log('Connecting to json')
         this.storage = new Handy(file);
         this.funds = this.storage.state;
         return {
